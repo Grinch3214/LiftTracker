@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+
+@utility container {
+	@apply mx-auto px-4;
+}
