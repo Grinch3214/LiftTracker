@@ -1,34 +1,40 @@
 <template>
   <div class="p-4">
-    <van-nav-bar title="Lift Tracker" left-text="Назад" right-text="Сегодня" />
-
-    <van-calendar
-      v-model:show="showCalendar"
-      v-model="selectedDate"
-      :min-date="minDate"
-      :max-date="maxDate"
-      @confirm="onConfirm"
-      @close="showCalendar = false"
-      color="#1989fa"
-    />
-
-    <van-cell
-      title="Выбрать дату тренировки"
-      :value="formattedDate"
-      is-link
-      @click="showCalendar = true"
-    />
-
-    <van-form v-if="selectedDate">
-      <van-field
-        v-model="workoutName"
-        label="Название тренировки"
-        placeholder="Например: Ноги + пресс"
+    <van-config-provider theme="dark">
+      <van-nav-bar
+        title="Lift Tracker"
+        left-text="Назад"
+        right-text="Сегодня"
       />
-      <van-button type="primary" block @click="saveWorkout"
-        >Сохранить</van-button
-      >
-    </van-form>
+
+      <van-calendar
+        v-model:show="showCalendar"
+        v-model="selectedDate"
+        :min-date="minDate"
+        :max-date="maxDate"
+        @confirm="onConfirm"
+        @close="showCalendar = false"
+        color="#1989fa"
+      />
+
+      <van-cell
+        title="Выбрать дату тренировки"
+        :value="formattedDate"
+        is-link
+        @click="showCalendar = true"
+      />
+
+      <van-form v-if="selectedDate">
+        <van-field
+          v-model="workoutName"
+          label="Название тренировки"
+          placeholder="Например: Ноги + пресс"
+        />
+        <van-button type="primary" block @click="saveWorkout"
+          >Сохранить</van-button
+        >
+      </van-form>
+    </van-config-provider>
   </div>
 </template>
 
