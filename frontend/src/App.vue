@@ -4,7 +4,6 @@
 
 <style>
 #app {
-  @apply min-h-dvh grid grid-rows-[auto_1fr_auto];
 }
 </style>
 
