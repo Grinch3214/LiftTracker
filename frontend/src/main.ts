@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 
-
+import 'vant/lib/index.css';
 import './assets/main.css';
 
 import App from './App.vue';
