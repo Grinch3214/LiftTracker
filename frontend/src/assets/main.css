@@ -1,5 +1,25 @@
-@import "tailwindcss";
-@import "tailwindcss-primeui";
+@import 'tailwindcss';
+@import 'tailwindcss-primeui';
+
+@import 'primeicons/primeicons.css';
+
+@font-face {
+	font-family: 'Montserrat';
+	font-weight: 400;
+	font-display: swap;
+	src: url('./fonts/Montserrat-Regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	font-weight: 700;
+	font-display: swap;
+	src: url('./fonts/Montserrat-Bold.woff2') format('woff2');
+}
+
+html {
+	font-family: 'Montserrat';
+}
 
 @utility container {
 	@apply mx-auto px-4;

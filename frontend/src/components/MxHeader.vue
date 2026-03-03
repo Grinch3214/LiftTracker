@@ -1,10 +1,20 @@
 <template>
   <header>
-    <div class="container">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-      suscipit praesentium beatae laborum cumque sunt incidunt ex voluptatum
-      officia molestias neque fugiat, consectetur eius quam amet possimus illum
-      tenetur similique.
+    <div class="container w-full flex items-center">
+      <div>{{ today }}</div>
+
+      <Button
+        icon="pi pi-calendar"
+        aria-label="Open calendar"
+        rounded
+        label="Calendar"
+      />
     </div>
   </header>
 </template>
+
+<script setup lang="ts">
+import { Button } from 'primevue';
+
+const today = 'Today';
+</script>
