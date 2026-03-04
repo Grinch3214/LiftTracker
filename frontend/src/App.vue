@@ -1,5 +1,7 @@
 <template>
-  <MxDefault />
+  <van-config-provider theme="dark">
+    <MxDefault />
+  </van-config-provider>
 </template>
 
 <style>
