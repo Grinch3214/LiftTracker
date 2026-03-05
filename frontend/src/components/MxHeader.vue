@@ -3,13 +3,13 @@
     <van-nav-bar
       title="Lift Tracker"
       left-text="Menu"
-      :right-text="formattedDate"
+      :right-text="calendarStore.formattedDate"
       @click-right="showCalendar = true"
     />
 
     <van-calendar
       v-model:show="showCalendar"
-      v-model="selectedDate"
+      v-model="calendarStore.selectedDate"
       :min-date="minDate"
       :max-date="maxDate"
       @confirm="onConfirm"
@@ -38,7 +38,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
+import { useCalendarStore } from '@/stores/calendar';
 
 import { Locale } from 'vant';
 import enUS from 'vant/es/locale/lang/en-US';
@@ -46,23 +47,14 @@ import { showToast, showSuccessToast } from 'vant';
 
 Locale.use('en-US', enUS);
 
+const calendarStore = useCalendarStore();
+
 const showCalendar = ref(false);
-const selectedDate = ref(null);
 const minDate = ref(new Date(2025, 0, 1));
 const maxDate = ref(new Date(2030, 11, 31));
 
-const formattedDate = computed(() => {
-  if (!selectedDate.value) return 'Today';
-  return selectedDate.value.toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'long',
-  });
-});
-
-const workoutName = ref('');
-
 const onConfirm = (date) => {
-  selectedDate.value = date;
+  calendarStore.selectedDate = date;
   showCalendar.value = false;
   showSuccessToast(
     `${date.toLocaleDateString('en-EN', {
@@ -75,16 +67,19 @@ const onConfirm = (date) => {
 
 const onSelect = (date) => {
   console.log(date);
-  if (selectedDate.value && selectedDate.value.getTime() === date.getTime()) {
+  if (
+    calendarStore.selectedDate &&
+    calendarStore.selectedDate.getTime() === date.getTime()
+  ) {
     onConfirm(date);
   } else {
-    selectedDate.value = date;
+    calendarStore.selectedDate = date;
   }
 };
 
-const saveWorkout = () => {
-  showToast('Тренировка сохранена!');
-};
+// const saveWorkout = () => {
+//   showToast('workout save');
+// };
 </script>
 
 <style>
