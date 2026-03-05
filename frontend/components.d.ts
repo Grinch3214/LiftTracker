@@ -12,6 +12,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     MxFooter: typeof import('./src/components/MxFooter.vue')['default']
+    MxGroupPanel: typeof import('./src/components/MxGroupPanel.vue')['default']
     MxHeader: typeof import('./src/components/MxHeader.vue')['default']
     MxHomePage: typeof import('./src/components/MxHomePage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -19,6 +20,7 @@ declare module 'vue' {
     VanActionBar: (typeof import('vant/es'))['ActionBar']
     VanActionBarButton: (typeof import('vant/es'))['ActionBarButton']
     VanActionBarIcon: (typeof import('vant/es'))['ActionBarIcon']
+    VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanButton: typeof import('vant/es')['Button']
     VanCalendar: typeof import('vant/es')['Calendar']
     VanCard: (typeof import('vant/es'))['Card']
