@@ -1,6 +1,6 @@
 <template>
   <van-action-sheet
-    v-model:show="globalStore.showGroupPanel"
+    v-model:show="globalStore.isShowGroupPanel"
     title="Title"
     class="group-panel"
   >

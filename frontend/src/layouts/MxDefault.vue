@@ -21,7 +21,7 @@ import { useGlobalStore } from '@/stores/global';
 const globalStore = useGlobalStore();
 
 function addExample() {
-  globalStore.showGroupPanel = true;
+  globalStore.isShowGroupPanel = true;
 }
 </script>
 
