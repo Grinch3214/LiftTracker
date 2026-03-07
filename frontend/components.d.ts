@@ -15,6 +15,7 @@ declare module 'vue' {
     MxGroupPanel: typeof import('./src/components/MxGroupPanel.vue')['default']
     MxHeader: typeof import('./src/components/MxHeader.vue')['default']
     MxHomePage: typeof import('./src/components/MxHomePage.vue')['default']
+    MxListWorkoutDay: typeof import('./src/components/MxListWorkoutDay.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VanActionBar: (typeof import('vant/es'))['ActionBar']

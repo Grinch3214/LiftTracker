@@ -79,12 +79,6 @@ const onSelect = (date) => {
 // const saveWorkout = () => {
 //   showToast('workout save');
 // };
-
-onMounted(() => {
-  if (!calendarStore.selectedDate) {
-    calendarStore.selectedDate = new Date();
-  }
-});
 </script>
 
 <style>

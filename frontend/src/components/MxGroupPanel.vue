@@ -4,12 +4,15 @@
     title="Title"
     class="group-panel"
   >
-    <div class="content">Content</div>
+    <div class="content">
+      <!-- <MxListWorkoutDay /> -->
+    </div>
   </van-action-sheet>
 </template>
 
 <script setup lang="ts">
 import { useGlobalStore } from '@/stores/global';
+// import MxListWorkoutDay from './MxListWorkoutDay.vue';
 
 const globalStore = useGlobalStore();
 </script>
