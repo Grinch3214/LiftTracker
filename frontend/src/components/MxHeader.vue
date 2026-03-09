@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useCalendarStore } from '@/stores/calendar';
 
 import { Locale } from 'vant';
@@ -66,7 +66,6 @@ const onConfirm = (date) => {
 };
 
 const onSelect = (date) => {
-  console.log(date);
   if (
     calendarStore.selectedDate &&
     calendarStore.selectedDate.getTime() === date.getTime()

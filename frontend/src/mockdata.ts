@@ -116,7 +116,7 @@ export const exercises: Exercise[] = [
 // --- Mock Workout Logs ---
 export const workoutLogs: WorkoutLog[] = [
   {
-    date: '2025-03-03',
+    date: '2026-03-07',
     exercises: [
       {
         id: 1,
@@ -174,5 +174,9 @@ export const getMuscleGroupById = (id: number): MuscleGroup | undefined =>
 export const getExercisesByGroup = (groupId: number): Exercise[] =>
   exercises.filter((ex) => ex.muscleGroupId === groupId);
 
-export const formatDate = (date: Date): string =>
-  date.toISOString().slice(0, 10);
+export const formatDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
