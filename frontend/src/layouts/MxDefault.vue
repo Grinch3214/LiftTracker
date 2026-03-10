@@ -4,11 +4,11 @@
     <!-- <MxHomePage /> -->
     <MxListWorkoutDay />
     <MxGroupPanel />
-    <van-button
-      class="add"
-      icon="plus"
+    <MxButton
       type="primary"
-      round
+      icon="plus"
+      is-round
+      class="add"
       @click="addExample"
     />
   </main>
@@ -21,6 +21,7 @@ import MxHeader from '@/components/MxHeader.vue';
 import MxListWorkoutDay from '@/components/MxListWorkoutDay.vue';
 import { useGlobalStore } from '@/stores/global';
 import { useCalendarStore } from '@/stores/calendar';
+import MxButton from '@/components/MxButton.vue';
 
 const globalStore = useGlobalStore();
 const calendarStore = useCalendarStore();
