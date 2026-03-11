@@ -11,6 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    MxButton: typeof import('./src/components/MxButton.vue')['default']
     MxFooter: typeof import('./src/components/MxFooter.vue')['default']
     MxGroupPanel: typeof import('./src/components/MxGroupPanel.vue')['default']
     MxHeader: typeof import('./src/components/MxHeader.vue')['default']
