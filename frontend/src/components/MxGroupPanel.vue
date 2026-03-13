@@ -6,8 +6,14 @@
     @closed="selectedGroup = null"
   >
     <div class="content">
-      <div v-if="selectedGroup" class="back-btn" @click="selectedGroup = null">
-        ← Back
+      <div class="content-subhead">
+        <div
+          v-if="selectedGroup"
+          class="back-btn"
+          @click="selectedGroup = null"
+        >
+          Back
+        </div>
       </div>
 
       <van-list v-if="!selectedGroup">
@@ -44,6 +50,11 @@ const selectedGroup = ref<MuscleGroup | null>(null);
 <style>
 .group-panel {
   height: 100%;
+}
+
+.content-subhead {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .back-btn {
