@@ -38,12 +38,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import {
-  workoutLogs,
-  getLogByDate,
-  getExerciseById,
-  formatDate,
-} from '../mockdata';
+import { getLogByDate, getExerciseById, formatDate } from '../mockdata';
 import { useCalendarStore } from '@/stores/calendar';
 
 export type EquipmentType =
