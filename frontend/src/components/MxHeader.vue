@@ -75,10 +75,6 @@ const onSelect = (date) => {
     calendarStore.selectedDate = date;
   }
 };
-
-// const saveWorkout = () => {
-//   showToast('workout save');
-// };
 </script>
 
 <style>
