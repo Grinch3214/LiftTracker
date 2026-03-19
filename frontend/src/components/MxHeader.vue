@@ -43,7 +43,7 @@ import { useCalendarStore } from '@/stores/calendar';
 
 import { Locale } from 'vant';
 import enUS from 'vant/es/locale/lang/en-US';
-import { showToast, showSuccessToast } from 'vant';
+import { showSuccessToast } from 'vant';
 
 Locale.use('en-US', enUS);
 
