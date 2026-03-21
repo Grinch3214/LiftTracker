@@ -78,7 +78,6 @@ const onSelect = (date) => {
 </script>
 
 <style>
-/* No time for develop :( */
 :root {
   --van-primary-color: #3c8ee0;
   --van-toast-default-width: 150px;
