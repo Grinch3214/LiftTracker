@@ -41,6 +41,7 @@ import { computed } from 'vue';
 import { getLogByDate, getExerciseById, formatDate } from '../mockdata';
 import { useCalendarStore } from '@/stores/calendar';
 
+// TODO: Refactor it
 export type EquipmentType =
   | 'barbell'
   | 'dumbbell'
