@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { type ButtonType } from 'vant/es';
-
+// No time for refact
 const props = defineProps<{
   icon?: string;
   type: ButtonType;
