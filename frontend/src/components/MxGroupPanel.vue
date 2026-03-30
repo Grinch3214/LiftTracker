@@ -39,6 +39,7 @@
 </template>
 
 <script setup lang="ts">
+// No time today
 import { ref } from 'vue';
 import { useGlobalStore } from '@/stores/global';
 import { muscleGroups, equipmentLabels, type MuscleGroup } from '../mockdata';
