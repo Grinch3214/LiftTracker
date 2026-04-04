@@ -1,8 +1,6 @@
 <template>
   <div class="workout-day">
-    <div v-if="currentWorkoutExercises.length === 0" class="empty">
-      Empty 💪
-    </div>
+    <div v-if="currentWorkoutExercises.length === 0" class="empty">Empty</div>
 
     <div
       v-for="exercise in currentWorkoutExercises"
