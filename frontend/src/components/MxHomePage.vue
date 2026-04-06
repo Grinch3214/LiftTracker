@@ -7,3 +7,7 @@
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+// no time ;(
+</script>

@@ -1,7 +1,7 @@
 <template>
   <div class="workout-day">
     <div v-if="currentWorkoutExercises.length === 0" class="empty">
-      Empty 💪
+      Empty state
     </div>
 
     <div
