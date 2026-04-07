@@ -8,6 +8,4 @@
   </section>
 </template>
 
-<script setup lang="ts">
-// no time ;(
-</script>
+<script setup lang="ts"></script>
