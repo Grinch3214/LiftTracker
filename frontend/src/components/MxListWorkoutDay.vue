@@ -40,44 +40,7 @@
 import { computed } from 'vue';
 import { useCalendarStore } from '@/stores/calendar';
 import { getLogByDate, getExerciseById, formatDate } from '../helpers';
-
-// TODO: Refactor it
-export type EquipmentType =
-  | 'barbell'
-  | 'dumbbell'
-  | 'machine'
-  | 'cable'
-  | 'bodyweight';
-
-export interface MuscleGroup {
-  id: number;
-  name: string;
-  icon: string;
-}
-
-export interface Exercise {
-  id: number;
-  name: string;
-  muscleGroupId: number;
-  equipment: EquipmentType;
-}
-
-export interface WorkoutSet {
-  id: number;
-  weight: number;
-  reps: number;
-}
-
-export interface WorkoutExercise {
-  id: number;
-  exerciseId: number;
-  sets: WorkoutSet[];
-}
-
-export interface WorkoutLog {
-  date: string; // 'YYYY-MM-DD'
-  exercises: WorkoutExercise[];
-}
+import type { Exercise, WorkoutSet } from '../types';
 
 const calendarStore = useCalendarStore();
 

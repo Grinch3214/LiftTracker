@@ -59,7 +59,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { equipmentLabels, type Exercise, type WorkoutSet } from '../mockdata';
+import { equipmentLabels } from '../mockdata';
+import type { Exercise, WorkoutSet } from '../types';
 import { useWorkoutStore } from '@/stores/workout';
 
 interface WorkoutExerciseProp {

@@ -1,12 +1,7 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
-import {
-  workoutLogs,
-  workoutTemplates,
-  type WorkoutLog,
-  type WorkoutExercise,
-  type WorkoutSet,
-} from '../mockdata';
+import { workoutLogs, workoutTemplates } from '../mockdata';
+import type { WorkoutLog, WorkoutExercise, WorkoutSet } from '../types';
 
 export const useWorkoutStore = defineStore('workout', () => {
   const logs = ref<WorkoutLog[]>(JSON.parse(JSON.stringify(workoutLogs)));

@@ -1,10 +1,5 @@
-import {
-  workoutLogs,
-  muscleGroups,
-  type WorkoutLog,
-  type Exercise,
-  type MuscleGroup,
-} from './mockdata';
+import { workoutLogs, muscleGroups } from './mockdata';
+import type { WorkoutLog, Exercise, MuscleGroup } from './types';
 
 export const getLogByDate = (date: string): WorkoutLog | undefined =>
   workoutLogs.find((log) => log.date === date);

@@ -62,7 +62,7 @@ import { computed } from 'vue';
 import { useWorkoutStore } from '@/stores/workout';
 import { useCalendarStore } from '@/stores/calendar';
 import { useGlobalStore } from '@/stores/global';
-import { type WorkoutLog } from '../mockdata';
+import type { WorkoutLog } from '../types';
 import { getExerciseById } from '../helpers';
 
 const workoutStore = useWorkoutStore();

@@ -95,7 +95,8 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { muscleGroups, type Exercise } from '../mockdata';
+import { muscleGroups } from '../mockdata';
+import type { Exercise } from '../types';
 import { useWorkoutStore } from '@/stores/workout';
 
 const workoutStore = useWorkoutStore();

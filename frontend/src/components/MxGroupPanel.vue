@@ -47,7 +47,8 @@ import { showSuccessToast, showToast } from 'vant';
 import { useGlobalStore } from '@/stores/global';
 import { useWorkoutStore } from '@/stores/workout';
 import { useCalendarStore } from '@/stores/calendar';
-import { muscleGroups, equipmentLabels, type MuscleGroup, type Exercise } from '../mockdata';
+import { muscleGroups, equipmentLabels } from '../mockdata';
+import type { MuscleGroup, Exercise } from '../types';
 import { formatDate } from '../helpers';
 
 const globalStore = useGlobalStore();

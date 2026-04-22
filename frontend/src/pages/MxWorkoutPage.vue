@@ -70,7 +70,8 @@ import { showConfirmDialog } from 'vant';
 import { useCalendarStore } from '@/stores/calendar';
 import { useWorkoutStore } from '@/stores/workout';
 import { useGlobalStore } from '@/stores/global';
-import { workoutTemplates, type WorkoutSet, type WorkoutExercise } from '../mockdata';
+import { workoutTemplates } from '../mockdata';
+import type { WorkoutSet, WorkoutExercise } from '../types';
 import { getExerciseById, formatDate } from '../helpers';
 import MxExerciseCard from '@/components/MxExerciseCard.vue';
 
