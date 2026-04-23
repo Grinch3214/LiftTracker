@@ -9,6 +9,7 @@
     <van-calendar
       v-model:show="showCalendar"
       v-model="calendarStore.selectedDate"
+      :default-date="calendarStore.selectedDate"
       :min-date="minDate"
       :max-date="maxDate"
       :formatter="dayFormatter"
