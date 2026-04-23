@@ -42,12 +42,14 @@
     </div>
 
     <div class="sheet-actions">
-      <van-button plain size="large" class="btn-cancel" @click="cancel">
-        Cancel
-      </van-button>
-      <van-button type="primary" size="large" class="btn-confirm" @click="confirm">
-        {{ sheet.setId !== null ? 'Save' : 'Add Set' }}
-      </van-button>
+      <MxButton plain size="large" text="Cancel" class="btn-cancel" @click="cancel" />
+      <MxButton
+        type="primary"
+        size="large"
+        :text="sheet.setId !== null ? 'Save' : 'Add Set'"
+        class="btn-confirm"
+        @click="confirm"
+      />
     </div>
   </van-popup>
 </template>
@@ -56,6 +58,7 @@
 import { computed, ref, watch } from 'vue';
 import { useGlobalStore } from '@/stores/global';
 import { useWorkoutStore } from '@/stores/workout';
+import MxButton from '@/components/MxButton.vue';
 
 const globalStore = useGlobalStore();
 const workoutStore = useWorkoutStore();

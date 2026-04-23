@@ -4,35 +4,35 @@
       <van-empty description="No workouts logged yet" />
     </div>
 
-    <div v-else class="log-list">
+    <div v-else class="log__list">
       <div
         v-for="log in sortedLogs"
         :key="log.date"
-        class="log-card"
+        class="log__card"
         @click="goToWorkout(log.date)"
       >
-        <div class="log-top">
-          <div class="log-date-block">
-            <span class="log-day-name">{{ getDayName(log.date) }}</span>
-            <span class="log-date">{{ getShortDate(log.date) }}</span>
+        <div class="log__top">
+          <div class="log__date-block">
+            <span class="log__day-name">{{ getDayName(log.date) }}</span>
+            <span class="log__date">{{ getShortDate(log.date) }}</span>
           </div>
-          <div class="log-stats">
-            <span class="stat">
+          <div class="log__stats">
+            <span class="log__stat">
               <van-icon name="apps-o" size="13" />
               {{ log.exercises.length }}
             </span>
-            <span class="stat">
+            <span class="log__stat">
               <van-icon name="notes-o" size="13" />
               {{ getTotalSets(log) }}
             </span>
-            <span class="stat">
+            <span class="log__stat">
               <van-icon name="chart-trending-o" size="13" />
               {{ getTotalVolume(log).toLocaleString() }} kg
             </span>
           </div>
         </div>
 
-        <div class="log-exercises">
+        <div class="log__exercises">
           <van-tag
             v-for="ex in log.exercises.slice(0, 4)"
             :key="ex.id"
@@ -83,8 +83,7 @@ function getTotalSets(log: WorkoutLog): number {
 
 function getTotalVolume(log: WorkoutLog): number {
   return log.exercises.reduce(
-    (sum, ex) =>
-      sum + ex.sets.reduce((s, set) => s + set.weight * set.reps, 0),
+    (sum, ex) => sum + ex.sets.reduce((s, set) => s + set.weight * set.reps, 0),
     0,
   );
 }
@@ -111,7 +110,7 @@ function goToWorkout(dateStr: string) {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .history-page {
   padding: 12px 12px 100px;
 }
@@ -120,81 +119,83 @@ function goToWorkout(dateStr: string) {
   padding-top: 60px;
 }
 
-.log-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.log {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 
-.log-card {
-  background: var(--van-background-2);
-  border-radius: 14px;
-  padding: 14px 14px 12px;
-  cursor: pointer;
-  position: relative;
-  transition: opacity 0.15s;
-}
+  &__card {
+    background: var(--van-background-2);
+    border-radius: 14px;
+    padding: 14px 14px 12px;
+    cursor: pointer;
+    position: relative;
+    transition: opacity 0.15s;
 
-.log-card:active {
-  opacity: 0.8;
-}
+    &:active {
+      opacity: 0.8;
+    }
+  }
 
-.log-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
 
-.log-date-block {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+  &__date-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
 
-.log-day-name {
-  font-size: 11px;
-  color: var(--van-primary-color);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+  &__day-name {
+    font-size: 11px;
+    color: var(--van-primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-.log-date {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--van-text-color);
-}
+  &__date {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--van-text-color);
+  }
 
-.log-stats {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
+  &__stats {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
 
-.stat {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  color: var(--van-text-color-2);
-}
+  &__stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--van-text-color-2);
+  }
 
-.log-exercises {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  &__exercises {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
 }
 
 .ex-tag {
-  border-color: var(--van-primary-color) !important;
-  color: var(--van-primary-color) !important;
-  border-radius: 6px !important;
+  border-color: var(--van-primary-color);
+  color: var(--van-primary-color);
+  border-radius: 6px;
 }
 
 .more-tag {
-  border-color: #555 !important;
-  color: #888 !important;
+  border-color: #555;
+  color: #888;
 }
 
 .arrow-icon {

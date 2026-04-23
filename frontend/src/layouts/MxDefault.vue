@@ -17,7 +17,7 @@
       v-if="globalStore.activeTab === 'workout'"
       type="primary"
       icon="plus"
-      is-round
+      round
       class="fab-add"
       @click="globalStore.isShowGroupPanel = true"
     />

@@ -11,10 +11,7 @@
         <span class="timer-label">Rest</span>
         <span class="timer-value">{{ timerDisplay }}</span>
         <div class="timer-bar">
-          <div
-            class="timer-bar-fill"
-            :style="{ width: timerProgress + '%' }"
-          />
+          <div class="timer-bar-fill" :style="{ width: timerProgress + '%' }" />
         </div>
         <van-icon name="cross" size="13" color="#888" />
       </div>
@@ -22,21 +19,20 @@
 
     <!-- Empty state -->
     <div v-if="exercises.length === 0" class="empty-state">
-      <van-empty image="https://fastly.jsdelivr.net/npm/@vant/assets/custom-empty-image.png" description=" " />
+      <van-empty image="/no-data.svg" />
       <p class="empty-title">No workout for this day</p>
       <p class="empty-sub">Start from a template or add exercises with +</p>
       <div class="template-chips">
-        <van-button
+        <MxButton
           v-for="t in topTemplates"
           :key="t.id"
           size="small"
           plain
           type="primary"
+          :text="`${t.icon} ${t.name}`"
           class="template-chip"
           @click="startTemplate(t.id)"
-        >
-          {{ t.icon }} {{ t.name }}
-        </van-button>
+        />
       </div>
     </div>
 
@@ -74,6 +70,7 @@ import { workoutTemplates } from '../mockdata';
 import type { WorkoutSet, WorkoutExercise } from '../types';
 import { getExerciseById, formatDate } from '../helpers';
 import MxExerciseCard from '@/components/MxExerciseCard.vue';
+import MxButton from '@/components/MxButton.vue';
 
 const calendarStore = useCalendarStore();
 const workoutStore = useWorkoutStore();
@@ -107,8 +104,7 @@ const totalSets = computed(() =>
 
 const totalVolume = computed(() =>
   exercises.value.reduce(
-    (sum, ex) =>
-      sum + ex.sets.reduce((s, set) => s + set.weight * set.reps, 0),
+    (sum, ex) => sum + ex.sets.reduce((s, set) => s + set.weight * set.reps, 0),
     0,
   ),
 );
