@@ -5,6 +5,7 @@
       :right-text="isWorkoutTab ? calendarStore.formattedDate : ''"
       @click-right="isWorkoutTab && (showCalendar = true)"
     />
+    <!-- No time today ;( -->
 
     <van-calendar
       v-model:show="showCalendar"
