@@ -1,7 +1,7 @@
 <template>
   <van-action-sheet
     v-model:show="globalStore.isShowGroupPanel"
-    :title="selectedGroup ? selectedGroup.name : 'Muscle Groups'"
+    :title="selectedGroup ? selectedGroup.name : 'Select Exercise'"
     class="group-panel"
     @closed="selectedGroup = null"
   >
@@ -12,7 +12,7 @@
           class="back-btn"
           @click="selectedGroup = null"
         >
-          Back
+          ← Back
         </div>
       </div>
 
@@ -21,6 +21,7 @@
           v-for="group in muscleGroups"
           :key="group.id"
           :title="`${group.icon} ${group.name}`"
+          :value="`${group.exercises.length} exercises`"
           is-link
           @click="selectedGroup = group"
         />
@@ -32,6 +33,8 @@
           :key="exercise.id"
           :title="exercise.name"
           :label="equipmentLabels[exercise.equipment]"
+          is-link
+          @click="selectExercise(exercise)"
         />
       </van-list>
     </div>
@@ -40,21 +43,50 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { showSuccessToast, showToast } from 'vant';
 import { useGlobalStore } from '@/stores/global';
-import { muscleGroups, equipmentLabels, type MuscleGroup } from '../mockdata';
+import { useWorkoutStore } from '@/stores/workout';
+import { useCalendarStore } from '@/stores/calendar';
+import { muscleGroups, equipmentLabels } from '../mockdata';
+import type { MuscleGroup, Exercise } from '../types';
+import { formatDate } from '../helpers';
 
 const globalStore = useGlobalStore();
+const workoutStore = useWorkoutStore();
+const calendarStore = useCalendarStore();
+
 const selectedGroup = ref<MuscleGroup | null>(null);
+
+function selectExercise(exercise: Exercise) {
+  const date = calendarStore.selectedDate
+    ? formatDate(calendarStore.selectedDate)
+    : formatDate(new Date());
+
+  const log = workoutStore.getLogByDate(date);
+  const alreadyAdded = log?.exercises.some(
+    (e) => e.exerciseId === exercise.id,
+  );
+
+  if (alreadyAdded) {
+    showToast(`${exercise.name} already in workout`);
+    return;
+  }
+
+  workoutStore.addExercise(date, exercise.id);
+  globalStore.isShowGroupPanel = false;
+  selectedGroup.value = null;
+  showSuccessToast(`${exercise.name} added`);
+}
 </script>
 
 <style>
 .group-panel {
-  height: 100%;
+  height: 80%;
 }
 
 .content-subhead {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .back-btn {
@@ -62,5 +94,6 @@ const selectedGroup = ref<MuscleGroup | null>(null);
   cursor: pointer;
   color: var(--van-primary-color);
   font-size: 14px;
+  font-weight: 600;
 }
 </style>
