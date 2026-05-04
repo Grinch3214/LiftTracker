@@ -40,10 +40,14 @@ export class WorkoutsService {
   }
 
   async addExercise(workoutId: number, dto: AddExerciseDto) {
-    const workout = await this.prisma.workoutLog.findUnique({ where: { id: workoutId } });
+    const workout = await this.prisma.workoutLog.findUnique({
+      where: { id: workoutId },
+    });
     if (!workout) throw new NotFoundException(`Workout ${workoutId} not found`);
 
-    const order = await this.prisma.workoutExercise.count({ where: { workoutLogId: workoutId } });
+    const order = await this.prisma.workoutExercise.count({
+      where: { workoutLogId: workoutId },
+    });
 
     return this.prisma.workoutLog.update({
       where: { id: workoutId },
@@ -57,15 +61,27 @@ export class WorkoutsService {
   }
 
   async removeExercise(workoutId: number, workoutExerciseId: number) {
-    await this.prisma.workoutExercise.delete({ where: { id: workoutExerciseId } });
-    return this.prisma.workoutLog.findUnique({ where: { id: workoutId }, include: workoutInclude });
+    await this.prisma.workoutExercise.delete({
+      where: { id: workoutExerciseId },
+    });
+    return this.prisma.workoutLog.findUnique({
+      where: { id: workoutId },
+      include: workoutInclude,
+    });
   }
 
   async addSet(workoutExerciseId: number, dto: UpsertSetDto) {
-    const exercise = await this.prisma.workoutExercise.findUnique({ where: { id: workoutExerciseId } });
-    if (!exercise) throw new NotFoundException(`WorkoutExercise ${workoutExerciseId} not found`);
+    const exercise = await this.prisma.workoutExercise.findUnique({
+      where: { id: workoutExerciseId },
+    });
+    if (!exercise)
+      throw new NotFoundException(
+        `WorkoutExercise ${workoutExerciseId} not found`,
+      );
 
-    const order = await this.prisma.workoutSet.count({ where: { workoutExerciseId } });
+    const order = await this.prisma.workoutSet.count({
+      where: { workoutExerciseId },
+    });
 
     return this.prisma.workoutSet.create({
       data: { ...dto, order, workoutExerciseId },
@@ -88,7 +104,8 @@ export class WorkoutsService {
       where: { id: dto.templateId },
       include: { exercises: { orderBy: { order: 'asc' } } },
     });
-    if (!template) throw new NotFoundException(`Template ${dto.templateId} not found`);
+    if (!template)
+      throw new NotFoundException(`Template ${dto.templateId} not found`);
 
     return this.prisma.workoutLog.upsert({
       where: { date: dto.date },
@@ -125,12 +142,21 @@ export class WorkoutsService {
 
     const history = entries.map((entry) => {
       const maxWeight = Math.max(...entry.sets.map((s) => s.weight));
-      const totalVolume = entry.sets.reduce((sum, s) => sum + s.weight * s.reps, 0);
+      const totalVolume = entry.sets.reduce(
+        (sum, s) => sum + s.weight * s.reps,
+        0,
+      );
       const bestSet = entry.sets.reduce(
         (best, s) => (s.weight > best.weight ? s : best),
         entry.sets[0],
       );
-      return { date: entry.workoutLog.date, sets: entry.sets, maxWeight, totalVolume, bestSet };
+      return {
+        date: entry.workoutLog.date,
+        sets: entry.sets,
+        maxWeight,
+        totalVolume,
+        bestSet,
+      };
     });
 
     const pr = history.reduce(

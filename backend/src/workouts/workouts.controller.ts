@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { AddExerciseDto } from './dto/add-exercise.dto';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { FromTemplateDto } from './dto/from-template.dto';
@@ -26,7 +36,10 @@ export class WorkoutsController {
   }
 
   @Post(':id/exercises')
-  addExercise(@Param('id', ParseIntPipe) id: number, @Body() dto: AddExerciseDto) {
+  addExercise(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: AddExerciseDto,
+  ) {
     return this.workoutsService.addExercise(id, dto);
   }
 
@@ -47,7 +60,10 @@ export class WorkoutsController {
   }
 
   @Put(':id/exercises/:exerciseId/sets/:setId')
-  updateSet(@Param('setId', ParseIntPipe) setId: number, @Body() dto: UpsertSetDto) {
+  updateSet(
+    @Param('setId', ParseIntPipe) setId: number,
+    @Body() dto: UpsertSetDto,
+  ) {
     return this.workoutsService.updateSet(setId, dto);
   }
 
