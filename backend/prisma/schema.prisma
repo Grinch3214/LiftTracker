@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EquipmentType {
+  barbell
+  dumbbell
+  machine
+  cable
+  bodyweight
+}
+
+model MuscleGroup {
+  id        Int        @id @default(autoincrement())
+  name      String
+  icon      String
+  exercises Exercise[]
+}
+
+model Exercise {
+  id                Int                @id @default(autoincrement())
+  name              String
+  equipment         EquipmentType
+  muscleGroupId     Int
+  muscleGroup       MuscleGroup        @relation(fields: [muscleGroupId], references: [id])
+  workoutExercises  WorkoutExercise[]
+  templateExercises TemplateExercise[]
+}
+
+model WorkoutLog {
+  id        Int               @id @default(autoincrement())
+  date      String
+  exercises WorkoutExercise[]
+  createdAt DateTime          @default(now())
+
+  @@unique([date])
+}
+
+model WorkoutExercise {
+  id           Int         @id @default(autoincrement())
+  order        Int         @default(0)
+  exerciseId   Int
+  exercise     Exercise    @relation(fields: [exerciseId], references: [id])
+  workoutLogId Int
+  workoutLog   WorkoutLog  @relation(fields: [workoutLogId], references: [id], onDelete: Cascade)
+  sets         WorkoutSet[]
+}
+
+model WorkoutSet {
+  id                Int             @id @default(autoincrement())
+  weight            Float
+  reps              Int
+  order             Int             @default(0)
+  workoutExerciseId Int
+  workoutExercise   WorkoutExercise @relation(fields: [workoutExerciseId], references: [id], onDelete: Cascade)
+}
+
+model WorkoutTemplate {
+  id        Int                @id @default(autoincrement())
+  name      String
+  icon      String
+  exercises TemplateExercise[]
+}
+
+model TemplateExercise {
+  id            Int             @id @default(autoincrement())
+  order         Int             @default(0)
+  defaultSets   Int
+  defaultReps   Int
+  defaultWeight Float
+  exerciseId    Int
+  exercise      Exercise        @relation(fields: [exerciseId], references: [id])
+  templateId    Int
+  template      WorkoutTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+}
