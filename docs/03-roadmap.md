@@ -42,7 +42,7 @@
 
 ---
 
-## ⏳ Milestone 3 — Daily Usage
+## ⏳ Milestone 3 - Workout Customization
 
 **Цель**
 Приложением удобно пользоваться на каждой тренировке.

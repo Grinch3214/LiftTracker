@@ -1,4 +1,9 @@
 ## Open questions
 
-- nuxt-vant-mobile как приоритет
-- Финальное название продукта.
+## Product
+
+- Финальное название
+
+## Technical
+
+- Nuxt Vant Mobile?
