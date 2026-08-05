@@ -1,0 +1,11 @@
+@use 'mixins' as m;
+@use 'varibles' as *;
+
+.container {
+  margin-inline: auto;
+  padding-inline: 15px;
+
+  @include m.viewport-xs {
+    max-width: $screen-xs;
+  }
+}
