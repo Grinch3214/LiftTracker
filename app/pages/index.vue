@@ -1,8 +1,12 @@
 <template>
   <div class="container empty-state">
-    <van-empty description="No workouts logged yet" />
+    <van-empty :image="noDataImg" description="No workouts logged yet" />
   </div>
 </template>
+
+<script lang="ts" setup>
+import noDataImg from '@/assets/images/no-data.svg';
+</script>
 
 <style scoped lang="scss">
 .empty-state {
