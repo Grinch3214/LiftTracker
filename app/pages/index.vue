@@ -6,7 +6,6 @@
 
 <script lang="ts" setup>
 import noDataImg from '@/assets/images/no-data.svg';
-// today I cant coding :(
 </script>
 
 <style scoped lang="scss">
