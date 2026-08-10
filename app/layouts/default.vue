@@ -4,17 +4,25 @@
     <main>
       <slot />
     </main>
-    <!-- <TheFooter /> -->
+    <TheFooter />
 
-    <van-button type="primary" icon="plus" class="add-day" />
+    <van-button
+      type="primary"
+      icon="plus"
+      class="add-day"
+      @click="uiStore.exercisePicker.show = true"
+    />
+
+    <WorkoutExercisePicker />
+    <WorkoutAddSetSheet />
+    <HistoryExerciseHistoryModal />
   </van-config-provider>
 </template>
 
 <script setup lang="ts">
-// as test, remove after
-import { useStorage } from '@vueuse/core';
+import { useUiStore } from '@/stores/ui';
 
-const note = useStorage('my-note', 'Hello!');
+const uiStore = useUiStore();
 </script>
 
 <style scoped lang="scss">
@@ -32,8 +40,8 @@ const note = useStorage('my-note', 'Hello!');
   width: 48px;
   height: 48px;
   position: fixed;
-  z-index: 10;
-  bottom: 48px;
+  z-index: 4;
+  bottom: calc(var(--van-tabbar-height, 50px) + 24px);
   right: 24px;
   box-shadow: 0 4px 16px rgba(60, 142, 224, 0.4);
 }
