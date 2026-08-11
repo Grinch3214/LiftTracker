@@ -108,21 +108,29 @@ function openEditSet(we: WorkoutExercise, set: SetEntry) {
 }
 
 async function removeSet(workoutExerciseId: string, setId: string) {
-  await showConfirmDialog({
-    title: t('workout.removeSetTitle'),
-    confirmButtonText: t('workout.remove'),
-    confirmButtonColor: '#ee0a24',
-  });
+  try {
+    await showConfirmDialog({
+      title: t('workout.removeSetTitle'),
+      confirmButtonText: t('workout.remove'),
+      confirmButtonColor: '#ee0a24',
+    });
+  } catch {
+    return;
+  }
   workoutStore.removeSet(currentDate.value, workoutExerciseId, setId);
 }
 
 async function removeExercise(workoutExerciseId: string) {
-  await showConfirmDialog({
-    title: t('workout.removeExerciseTitle'),
-    message: t('workout.removeExerciseMessage'),
-    confirmButtonText: t('workout.remove'),
-    confirmButtonColor: '#ee0a24',
-  });
+  try {
+    await showConfirmDialog({
+      title: t('workout.removeExerciseTitle'),
+      message: t('workout.removeExerciseMessage'),
+      confirmButtonText: t('workout.remove'),
+      confirmButtonColor: '#ee0a24',
+    });
+  } catch {
+    return;
+  }
   workoutStore.removeExercise(currentDate.value, workoutExerciseId);
 }
 </script>
