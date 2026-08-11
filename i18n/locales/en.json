@@ -1,0 +1,117 @@
+{
+  "nav": {
+    "workout": "Workout",
+    "history": "History"
+  },
+  "workout": {
+    "emptyState": "No workout for this day",
+    "summary": "{exercises} · {sets} · {volume} kg total",
+    "noSets": "No sets yet. Add your first set below.",
+    "addSet": "Add set",
+    "removeExerciseTitle": "Remove exercise?",
+    "removeExerciseMessage": "All sets will be deleted.",
+    "removeSetTitle": "Remove set?",
+    "remove": "Remove",
+    "prBadge": "PR",
+    "setsHeaderSet": "#",
+    "setsHeaderWeight": "Weight",
+    "setsHeaderReps": "Reps",
+    "setsHeaderVol": "Vol"
+  },
+  "addSetSheet": {
+    "editTitle": "Edit Set",
+    "addTitle": "Add Set",
+    "weightLabel": "Weight (kg)",
+    "repsLabel": "Reps",
+    "lastSession": "Last session: {weight} × {reps} reps",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "exercisePicker": {
+    "selectTitle": "Select Exercise",
+    "back": "← Back",
+    "alreadyAdded": "{name} already in workout",
+    "added": "{name} added"
+  },
+  "history": {
+    "empty": "No workouts logged yet",
+    "kg": "{weight} kg"
+  },
+  "exerciseHistory": {
+    "title": "History",
+    "empty": "History will appear here after your first workout with this exercise.",
+    "best": "Best: {value}",
+    "noBest": "—",
+    "kgTotal": "{volume} kg total"
+  },
+  "restTimer": {
+    "label": "Rest"
+  },
+  "units": {
+    "kg": "kg",
+    "bodyweight": "BW",
+    "countWord": "{count} {word}",
+    "exerciseWordOne": "exercise",
+    "exerciseWordFew": "exercises",
+    "exerciseWordMany": "exercises",
+    "setWordOne": "set",
+    "setWordFew": "sets",
+    "setWordMany": "sets",
+    "equipment": {
+      "barbell": "Barbell",
+      "dumbbell": "Dumbbell",
+      "machine": "Machine",
+      "cable": "Cable",
+      "bodyweight": "Bodyweight"
+    }
+  },
+  "calendar": {
+    "today": "Today"
+  },
+  "catalog": {
+    "muscleGroups": {
+      "chest": "Chest",
+      "back": "Back",
+      "shoulders": "Shoulders",
+      "arms": "Arms",
+      "legs": "Legs",
+      "core": "Core"
+    },
+    "exercises": {
+      "bench-press": "Bench Press",
+      "incline-bench-press": "Incline Bench Press",
+      "dumbbell-flyes": "Dumbbell Flyes",
+      "dumbbell-press": "Dumbbell Press",
+      "cable-crossover": "Cable Crossover",
+      "push-up": "Push-Up",
+      "deadlift": "Deadlift",
+      "barbell-row": "Barbell Row",
+      "pull-up": "Pull-Up",
+      "lat-pulldown": "Lat Pulldown",
+      "seated-cable-row": "Seated Cable Row",
+      "dumbbell-row": "Dumbbell Row",
+      "overhead-press": "Overhead Press",
+      "dumbbell-shoulder-press": "Dumbbell Shoulder Press",
+      "lateral-raise": "Lateral Raise",
+      "front-raise": "Front Raise",
+      "face-pull": "Face Pull",
+      "barbell-curl": "Barbell Curl",
+      "hammer-curl": "Hammer Curl",
+      "dumbbell-curl": "Dumbbell Curl",
+      "tricep-pushdown": "Tricep Pushdown",
+      "skull-crusher": "Skull Crusher",
+      "dips": "Dips",
+      "squat": "Squat",
+      "leg-press": "Leg Press",
+      "romanian-deadlift": "Romanian Deadlift",
+      "leg-curl": "Leg Curl",
+      "leg-extension": "Leg Extension",
+      "calf-raise": "Calf Raise",
+      "lunges": "Lunges",
+      "plank": "Plank",
+      "crunch": "Crunch",
+      "leg-raise": "Leg Raise",
+      "cable-crunch": "Cable Crunch"
+    }
+  }
+}

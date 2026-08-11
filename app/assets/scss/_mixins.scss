@@ -1,0 +1,37 @@
+@use 'varibles' as *;
+
+@mixin viewport-xs {
+  @media (min-width: $screen-xs) {
+    @content;
+  }
+}
+
+@mixin viewport-sm {
+  @media (min-width: $screen-sm) {
+    @content;
+  }
+}
+
+@mixin viewport-md {
+  @media (min-width: $screen-md) {
+    @content;
+  }
+}
+
+@mixin viewport-lg {
+  @media (min-width: $screen-lg) {
+    @content;
+  }
+}
+
+@mixin viewport-xl {
+  @media (min-width: $screen-xl) {
+    @content;
+  }
+}
+
+// @mixin text-gradient {
+// 	background: var(--hero-name-background);
+// 	background-clip: text;
+// 	color: transparent;
+// }
