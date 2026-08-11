@@ -10,6 +10,7 @@
     "addSet": "Добавить подход",
     "removeExerciseTitle": "Удалить упражнение?",
     "removeExerciseMessage": "Все подходы будут удалены.",
+    "removeSetTitle": "Удалить подход?",
     "remove": "Удалить",
     "prBadge": "PR",
     "setsHeaderSet": "№",

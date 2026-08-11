@@ -107,7 +107,12 @@ function openEditSet(we: WorkoutExercise, set: SetEntry) {
   };
 }
 
-function removeSet(workoutExerciseId: string, setId: string) {
+async function removeSet(workoutExerciseId: string, setId: string) {
+  await showConfirmDialog({
+    title: t('workout.removeSetTitle'),
+    confirmButtonText: t('workout.remove'),
+    confirmButtonColor: '#ee0a24',
+  });
   workoutStore.removeSet(currentDate.value, workoutExerciseId, setId);
 }
 
