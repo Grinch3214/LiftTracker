@@ -1,6 +1,10 @@
 <template>
   <header class="header">
-    <van-nav-bar :title="title" :right-text="isWorkoutPage ? dateLabel : ''" @click-right="isWorkoutPage && (showCalendar = true)" />
+    <van-nav-bar
+      :title="title"
+      :right-text="isWorkoutPage ? dateLabel : ''"
+      @click-right="isWorkoutPage && (showCalendar = true)"
+    />
 
     <van-calendar
       v-model:show="showCalendar"
@@ -16,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import type { CalendarDayItem } from 'vant';
 import { useUiStore } from '@/stores/ui';
 import { useWorkoutStore } from '@/stores/workout';
@@ -39,7 +42,11 @@ const titles: Record<string, string> = {
 
 const title = computed(() => titles[route.path] ?? 'LiftTracker');
 
-const dateLabel = computed(() => (isToday(formatDate(uiStore.selectedDate)) ? 'Today' : formatDate(uiStore.selectedDate)));
+const dateLabel = computed(() =>
+  isToday(formatDate(uiStore.selectedDate))
+    ? 'Today'
+    : formatDate(uiStore.selectedDate),
+);
 
 function dayFormatter(day: CalendarDayItem): CalendarDayItem {
   if (day.date && workoutStore.workoutDates.includes(formatDate(day.date))) {

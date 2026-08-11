@@ -1,5 +1,11 @@
 <template>
-  <van-popup v-model:show="show" position="bottom" round closeable class="history-popup">
+  <van-popup
+    v-model:show="show"
+    position="bottom"
+    round
+    closeable
+    class="history-popup"
+  >
     <div class="sheet-handle" />
 
     <div class="sheet-header">
@@ -7,18 +13,31 @@
       <span class="sheet-exercise-name">{{ exercise?.name }}</span>
     </div>
 
-    <div v-if="history.length === 0" class="empty">No history yet for this exercise.</div>
+    <div v-if="history.length === 0" class="empty">
+      History will appear here after your first workout with this exercise.
+    </div>
 
     <div v-else class="history-list">
-      <div v-for="entry in history" :key="entry.date" class="history-entry">
-        <div class="entry-date">{{ entry.date }}</div>
+      <div
+        v-for="entry in history"
+        :key="entry.workoutId"
+        class="history-entry"
+      >
+        <div class="entry-date">{{ formatDateLabel(entry.date) }}</div>
         <div class="entry-sets">
           <span v-for="set in entry.sets" :key="set.id" class="entry-set">
-            {{ set.weight > 0 ? set.weight + ' kg' : 'BW' }} × {{ set.reps }}
+            {{ formatWeight(set.weight) }} × {{ set.reps }}
           </span>
         </div>
         <div class="entry-stats">
-          <span>Best: {{ entry.bestSet ? `${entry.bestSet.weight} kg × ${entry.bestSet.reps}` : '—' }}</span>
+          <span
+            >Best:
+            {{
+              entry.bestSet
+                ? `${formatWeight(entry.bestSet.weight)} × ${entry.bestSet.reps}`
+                : '—'
+            }}</span
+          >
           <span class="dot">·</span>
           <span>{{ entry.totalVolume.toLocaleString() }} kg total</span>
         </div>
@@ -28,10 +47,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useUiStore } from '@/stores/ui';
 import { useWorkoutStore } from '@/stores/workout';
 import { getExerciseById } from '@/utils/exercises';
+import { formatWeight } from '@/utils/format';
+import { formatDateLabel } from '@/utils/date';
 
 const uiStore = useUiStore();
 const workoutStore = useWorkoutStore();
@@ -39,15 +59,21 @@ const workoutStore = useWorkoutStore();
 const show = computed({
   get: () => uiStore.historyExerciseId !== null,
   set: (val: boolean) => {
-    if (!val) uiStore.historyExerciseId = null;
+    if (!val) uiStore.closeExerciseHistory();
   },
 });
 
-const exercise = computed(() => (uiStore.historyExerciseId ? getExerciseById(uiStore.historyExerciseId) : undefined));
+const exercise = computed(() =>
+  uiStore.historyExerciseId
+    ? getExerciseById(uiStore.historyExerciseId)
+    : undefined,
+);
 
 const history = computed(() => {
   if (!uiStore.historyExerciseId) return [];
-  return [...workoutStore.getExerciseHistory(uiStore.historyExerciseId)].reverse();
+  return [
+    ...workoutStore.getExerciseHistory(uiStore.historyExerciseId),
+  ].reverse();
 });
 </script>
 

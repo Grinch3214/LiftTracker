@@ -1,6 +1,10 @@
 <template>
   <Transition name="slide-down">
-    <div v-if="uiStore.restTimer.active" class="rest-timer" @click="uiStore.stopRestTimer()">
+    <div
+      v-if="uiStore.restTimer.active"
+      class="rest-timer"
+      @click="uiStore.stopRestTimer()"
+    >
       <van-icon name="clock-o" size="15" />
       <span class="timer-label">Rest</span>
       <span class="timer-value">{{ timerDisplay }}</span>
@@ -13,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useUiStore } from '@/stores/ui';
 
 const uiStore = useUiStore();

@@ -13,7 +13,8 @@ import noDataImg from '@/assets/images/no-data.svg';
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 32px 24px 16px;
+  margin-block: auto;
+  padding-block-end: var(--van-tabbar-height);
   text-align: center;
 }
 </style>

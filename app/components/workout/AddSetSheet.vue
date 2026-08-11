@@ -1,32 +1,61 @@
 <template>
-  <van-popup v-model:show="sheet.show" position="bottom" round class="add-set-popup">
+  <van-popup
+    v-model:show="sheet.show"
+    position="bottom"
+    round
+    class="add-set-popup"
+  >
     <div class="sheet-handle" />
 
     <div class="sheet-header">
-      <span class="sheet-title">{{ sheet.setId !== null ? 'Edit Set' : 'Add Set' }}</span>
+      <span class="sheet-title">{{
+        sheet.setId !== null ? 'Edit Set' : 'Add Set'
+      }}</span>
       <span class="sheet-exercise-name">{{ sheet.exerciseName }}</span>
     </div>
 
     <div v-if="prevSession" class="prev-info">
       <van-icon name="clock-o" size="13" color="#888" />
-      <span>Last session: {{ prevSession.weight > 0 ? prevSession.weight + ' kg' : 'BW' }} × {{ prevSession.reps }} reps</span>
+      <span
+        >Last session: {{ formatWeight(prevSession.weight) }} ×
+        {{ prevSession.reps }} reps</span
+      >
     </div>
 
     <div class="inputs-row">
       <div class="input-block">
         <label>Weight (kg)</label>
-        <van-field v-model="weightStr" type="number" input-align="center" placeholder="0" class="set-input" />
+        <van-field
+          v-model="weightStr"
+          type="number"
+          input-align="center"
+          placeholder="0"
+          class="set-input"
+        />
       </div>
       <div class="input-divider" />
       <div class="input-block">
         <label>Reps</label>
-        <van-field v-model="repsStr" type="digit" input-align="center" placeholder="0" class="set-input" />
+        <van-field
+          v-model="repsStr"
+          type="digit"
+          input-align="center"
+          placeholder="0"
+          class="set-input"
+        />
       </div>
     </div>
 
     <div class="sheet-actions">
-      <van-button plain size="large" class="btn-cancel" @click="cancel">Cancel</van-button>
-      <van-button type="primary" size="large" class="btn-confirm" @click="confirm">
+      <van-button plain size="large" class="btn-cancel" @click="cancel"
+        >Cancel</van-button
+      >
+      <van-button
+        type="primary"
+        size="large"
+        class="btn-confirm"
+        @click="confirm"
+      >
         {{ sheet.setId !== null ? 'Save' : 'Add Set' }}
       </van-button>
     </div>
@@ -34,9 +63,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
 import { useUiStore } from '@/stores/ui';
 import { useWorkoutStore } from '@/stores/workout';
+import { formatWeight } from '@/utils/format';
 
 const uiStore = useUiStore();
 const workoutStore = useWorkoutStore();
@@ -50,8 +79,10 @@ watch(
   () => sheet.value.show,
   (shown) => {
     if (shown) {
-      weightStr.value = sheet.value.defaultWeight > 0 ? String(sheet.value.defaultWeight) : '';
-      repsStr.value = sheet.value.defaultReps > 0 ? String(sheet.value.defaultReps) : '';
+      weightStr.value =
+        sheet.value.defaultWeight > 0 ? String(sheet.value.defaultWeight) : '';
+      repsStr.value =
+        sheet.value.defaultReps > 0 ? String(sheet.value.defaultReps) : '';
     }
   },
 );
@@ -71,9 +102,20 @@ function confirm() {
   if (reps === 0) return;
 
   if (sheet.value.setId !== null) {
-    workoutStore.updateSet(sheet.value.date, sheet.value.workoutExerciseId, sheet.value.setId, weight, reps);
+    workoutStore.updateSet(
+      sheet.value.date,
+      sheet.value.workoutExerciseId,
+      sheet.value.setId,
+      weight,
+      reps,
+    );
   } else {
-    workoutStore.addSet(sheet.value.date, sheet.value.workoutExerciseId, weight, reps);
+    workoutStore.addSet(
+      sheet.value.date,
+      sheet.value.workoutExerciseId,
+      weight,
+      reps,
+    );
     uiStore.startRestTimer(90);
   }
   uiStore.addSetSheet.show = false;

@@ -1,13 +1,19 @@
 <template>
   <div class="exercise-card">
     <div class="ex-header">
-      <div class="ex-meta" @click="uiStore.historyExerciseId = exercise.id">
+      <div class="ex-meta" @click="uiStore.openExerciseHistory(exercise.id)">
         <span class="ex-name">{{ exercise.name }}</span>
         <van-tag v-if="exercise.equipment" plain class="eq-tag">
           {{ equipmentLabels[exercise.equipment] }}
         </van-tag>
       </div>
-      <van-icon name="delete-o" size="18" color="#888" class="delete-ex-btn" @click="$emit('deleteExercise')" />
+      <van-icon
+        name="delete-o"
+        size="18"
+        color="#888"
+        class="delete-ex-btn"
+        @click="$emit('deleteExercise')"
+      />
     </div>
 
     <div class="sets-header">
@@ -27,15 +33,22 @@
     >
       <span class="set-num">{{ i + 1 }}</span>
       <span class="set-weight">
-        {{ set.weight > 0 ? set.weight + ' kg' : 'BW' }}
+        {{ formatWeight(set.weight) }}
         <span v-if="isPR(set)" class="pr-badge">PR</span>
       </span>
       <span class="set-reps">{{ set.reps }}</span>
       <span class="set-vol">{{ set.weight * set.reps }}</span>
-      <van-icon name="cross" size="13" color="#666" @click.stop="$emit('deleteSet', set.id)" />
+      <van-icon
+        name="cross"
+        size="13"
+        color="#666"
+        @click.stop="$emit('deleteSet', set.id)"
+      />
     </div>
 
-    <div v-if="workoutExercise.sets.length === 0" class="no-sets">No sets yet. Add your first set below.</div>
+    <div v-if="workoutExercise.sets.length === 0" class="no-sets">
+      No sets yet. Add your first set below.
+    </div>
 
     <div class="add-set-btn" @click="$emit('addSet')">
       <van-icon name="plus" size="14" />
@@ -45,11 +58,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { Exercise, WorkoutExercise, SetEntry } from '~~/types';
 import { useWorkoutStore } from '@/stores/workout';
 import { useUiStore } from '@/stores/ui';
 import { equipmentLabels } from '@/utils/exercises';
+import { formatWeight } from '@/utils/format';
 
 const props = defineProps<{
   exercise: Exercise;

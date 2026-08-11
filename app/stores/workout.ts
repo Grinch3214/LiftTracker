@@ -3,7 +3,8 @@ import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import type { Workout, WorkoutExercise, SetEntry } from '~~/types';
 
-interface ExerciseHistoryEntry {
+export interface ExerciseHistoryEntry {
+  workoutId: string;
   date: string;
   sets: SetEntry[];
   maxWeight: number;
@@ -34,7 +35,9 @@ export const useWorkoutStore = defineStore('workout', () => {
 
   function addExercise(date: string, exerciseId: string): WorkoutExercise {
     const workout = getOrCreateWorkoutByDate(date);
-    const existing = workout.exercises.find((exercise) => exercise.exerciseId === exerciseId);
+    const existing = workout.exercises.find(
+      (exercise) => exercise.exerciseId === exerciseId,
+    );
     if (existing) return existing;
 
     const workoutExercise: WorkoutExercise = {
@@ -51,7 +54,9 @@ export const useWorkoutStore = defineStore('workout', () => {
     const workout = getWorkoutByDate(date);
     if (!workout) return;
 
-    const index = workout.exercises.findIndex((exercise) => exercise.id === workoutExerciseId);
+    const index = workout.exercises.findIndex(
+      (exercise) => exercise.id === workoutExerciseId,
+    );
     if (index !== -1) workout.exercises.splice(index, 1);
 
     if (workout.exercises.length === 0) {
@@ -60,7 +65,12 @@ export const useWorkoutStore = defineStore('workout', () => {
     }
   }
 
-  function addSet(date: string, workoutExerciseId: string, weight: number, reps: number): void {
+  function addSet(
+    date: string,
+    workoutExerciseId: string,
+    weight: number,
+    reps: number,
+  ): void {
     const workout = getWorkoutByDate(date);
     const exercise = workout?.exercises.find((e) => e.id === workoutExerciseId);
     if (!exercise) return;
@@ -73,7 +83,13 @@ export const useWorkoutStore = defineStore('workout', () => {
     });
   }
 
-  function updateSet(date: string, workoutExerciseId: string, setId: string, weight: number, reps: number): void {
+  function updateSet(
+    date: string,
+    workoutExerciseId: string,
+    setId: string,
+    weight: number,
+    reps: number,
+  ): void {
     const workout = getWorkoutByDate(date);
     const exercise = workout?.exercises.find((e) => e.id === workoutExerciseId);
     const set = exercise?.sets.find((s) => s.id === setId);
@@ -83,7 +99,11 @@ export const useWorkoutStore = defineStore('workout', () => {
     set.reps = reps;
   }
 
-  function removeSet(date: string, workoutExerciseId: string, setId: string): void {
+  function removeSet(
+    date: string,
+    workoutExerciseId: string,
+    setId: string,
+  ): void {
     const workout = getWorkoutByDate(date);
     const exercise = workout?.exercises.find((e) => e.id === workoutExerciseId);
     if (!exercise) return;
@@ -96,28 +116,52 @@ export const useWorkoutStore = defineStore('workout', () => {
 
   function getExerciseHistory(exerciseId: string): ExerciseHistoryEntry[] {
     return workouts.value
-      .filter((workout) => workout.exercises.some((e) => e.exerciseId === exerciseId))
+      .filter((workout) =>
+        workout.exercises.some((e) => e.exerciseId === exerciseId),
+      )
       .map((workout) => {
-        const exercise = workout.exercises.find((e) => e.exerciseId === exerciseId)!;
-        const maxWeight = exercise.sets.length > 0 ? Math.max(...exercise.sets.map((s) => s.weight)) : 0;
-        const totalVolume = exercise.sets.reduce((sum, s) => sum + s.weight * s.reps, 0);
+        const exercise = workout.exercises.find(
+          (e) => e.exerciseId === exerciseId,
+        )!;
+        const maxWeight =
+          exercise.sets.length > 0
+            ? Math.max(...exercise.sets.map((s) => s.weight))
+            : 0;
+        const totalVolume = exercise.sets.reduce(
+          (sum, s) => sum + s.weight * s.reps,
+          0,
+        );
         const bestSet =
           exercise.sets.length > 0
-            ? exercise.sets.reduce((best, s) => (s.weight > best.weight ? s : best))
+            ? exercise.sets.reduce((best, s) =>
+                s.weight > best.weight ? s : best,
+              )
             : null;
-        return { date: workout.date, sets: exercise.sets, maxWeight, totalVolume, bestSet };
+        return {
+          workoutId: workout.id,
+          date: workout.date,
+          sets: exercise.sets,
+          maxWeight,
+          totalVolume,
+          bestSet,
+        };
       })
       .sort((a, b) => a.date.localeCompare(b.date));
   }
 
-  function getPersonalRecord(exerciseId: string): { weight: number; reps: number; date: string } | null {
+  function getPersonalRecord(
+    exerciseId: string,
+  ): { weight: number; reps: number; date: string } | null {
     const history = getExerciseHistory(exerciseId);
     if (!history.length) return null;
 
     let pr = { weight: 0, reps: 0, date: '' };
     history.forEach((entry) => {
       entry.sets.forEach((set) => {
-        if (set.weight > pr.weight || (set.weight === pr.weight && set.reps > pr.reps)) {
+        if (
+          set.weight > pr.weight ||
+          (set.weight === pr.weight && set.reps > pr.reps)
+        ) {
           pr = { weight: set.weight, reps: set.reps, date: entry.date };
         }
       });

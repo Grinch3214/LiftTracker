@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { showConfirmDialog } from 'vant';
 import type { SetEntry, WorkoutExercise } from '~~/types';
 import { useWorkoutStore } from '@/stores/workout';
@@ -41,12 +40,19 @@ const uiStore = useUiStore();
 
 const currentDate = computed(() => formatDate(uiStore.selectedDate));
 
-const exercises = computed(() => workoutStore.getWorkoutByDate(currentDate.value)?.exercises ?? []);
+const exercises = computed(
+  () => workoutStore.getWorkoutByDate(currentDate.value)?.exercises ?? [],
+);
 
-const totalSets = computed(() => exercises.value.reduce((sum, ex) => sum + ex.sets.length, 0));
+const totalSets = computed(() =>
+  exercises.value.reduce((sum, ex) => sum + ex.sets.length, 0),
+);
 
 const totalVolume = computed(() =>
-  exercises.value.reduce((sum, ex) => sum + ex.sets.reduce((s, set) => s + set.weight * set.reps, 0), 0),
+  exercises.value.reduce(
+    (sum, ex) => sum + ex.sets.reduce((s, set) => s + set.weight * set.reps, 0),
+    0,
+  ),
 );
 
 function getExercise(exerciseId: string) {
@@ -99,7 +105,9 @@ async function removeExercise(workoutExerciseId: string) {
 
 <style scoped lang="scss">
 .workout-page {
-  padding-bottom: 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .workout-summary {

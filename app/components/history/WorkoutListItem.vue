@@ -16,7 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { Workout } from '~~/types';
 import { useUiStore } from '@/stores/ui';
 import { parseDate } from '@/utils/date';
@@ -28,16 +27,26 @@ const uiStore = useUiStore();
 const date = computed(() => parseDate(props.workout.date));
 
 const dayLabel = computed(() => date.value.getDate());
-const weekdayLabel = computed(() => date.value.toLocaleDateString('en-US', { month: 'short', weekday: 'short' }));
-
-const exerciseNames = computed(() =>
-  props.workout.exercises.map((we) => getExerciseById(we.exerciseId)?.name).filter(Boolean).join(', '),
+const weekdayLabel = computed(() =>
+  date.value.toLocaleDateString('en-US', { month: 'short', weekday: 'short' }),
 );
 
-const totalSets = computed(() => props.workout.exercises.reduce((sum, e) => sum + e.sets.length, 0));
+const exerciseNames = computed(() =>
+  props.workout.exercises
+    .map((we) => getExerciseById(we.exerciseId)?.name)
+    .filter(Boolean)
+    .join(', '),
+);
+
+const totalSets = computed(() =>
+  props.workout.exercises.reduce((sum, e) => sum + e.sets.length, 0),
+);
 
 const totalVolume = computed(() =>
-  props.workout.exercises.reduce((sum, e) => sum + e.sets.reduce((s, set) => s + set.weight * set.reps, 0), 0),
+  props.workout.exercises.reduce(
+    (sum, e) => sum + e.sets.reduce((s, set) => s + set.weight * set.reps, 0),
+    0,
+  ),
 );
 
 function open() {

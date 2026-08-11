@@ -16,3 +16,7 @@ export function parseDate(dateStr: string): Date {
   const day = Number(parts[2]);
   return new Date(year, month - 1, day);
 }
+
+export function formatDateLabel(dateStr: string): string {
+  return parseDate(dateStr).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+}

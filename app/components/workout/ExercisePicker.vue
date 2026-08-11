@@ -6,7 +6,9 @@
     @closed="selectedGroup = null"
   >
     <div class="content">
-      <div v-if="selectedGroup" class="back-btn" @click="selectedGroup = null">← Back</div>
+      <div v-if="selectedGroup" class="back-btn" @click="selectedGroup = null">
+        ← Back
+      </div>
 
       <van-list v-if="!selectedGroup">
         <van-cell
@@ -34,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { showSuccessToast, showToast } from 'vant';
 import type { MuscleGroup, Exercise } from '~~/types';
 import { useUiStore } from '@/stores/ui';
@@ -51,7 +52,9 @@ const selectedGroup = ref<MuscleGroup | null>(null);
 function selectExercise(exercise: Exercise) {
   const date = formatDate(uiStore.selectedDate);
   const workout = workoutStore.getWorkoutByDate(date);
-  const alreadyAdded = workout?.exercises.some((e) => e.exerciseId === exercise.id);
+  const alreadyAdded = workout?.exercises.some(
+    (e) => e.exerciseId === exercise.id,
+  );
 
   if (alreadyAdded) {
     showToast(`${exercise.name} already in workout`);
