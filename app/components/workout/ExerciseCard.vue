@@ -33,8 +33,14 @@
     >
       <span class="set-num">{{ i + 1 }}</span>
       <span class="set-weight">
-        {{ isBodyweight(set.weight) ? t('units.bodyweight') : `${set.weight} ${t('units.kg')}` }}
-        <span v-if="isPR(set)" class="pr-badge">{{ t('workout.prBadge') }}</span>
+        {{
+          isBodyweight(set.weight)
+            ? t('units.bodyweight')
+            : `${set.weight} ${t('units.kg')}`
+        }}
+        <span v-if="isPR(set)" class="pr-badge">{{
+          t('workout.prBadge')
+        }}</span>
       </span>
       <span class="set-reps">{{ set.reps }}</span>
       <span class="set-vol">{{ set.weight * set.reps }}</span>
@@ -86,8 +92,20 @@ const prWeight = computed(() => {
   return Math.max(...history.map((h) => h.maxWeight));
 });
 
+// If several sets tie the record weight, only the most recent one gets the badge.
+const prSetId = computed(() => {
+  if (prWeight.value <= 0) return null;
+  const qualifying = props.workoutExercise.sets.filter(
+    (s) => s.weight > 0 && s.weight >= prWeight.value,
+  );
+  if (qualifying.length) {
+    console.log(qualifying[qualifying.length - 1]);
+  }
+  return qualifying.length > 0 ? qualifying[qualifying.length - 1]!.id : null;
+});
+
 function isPR(set: SetEntry): boolean {
-  return set.weight > 0 && prWeight.value > 0 && set.weight >= prWeight.value;
+  return set.id === prSetId.value;
 }
 </script>
 
