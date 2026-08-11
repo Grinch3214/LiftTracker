@@ -1,11 +1,13 @@
 <template>
   <div class="empty-state">
-    <van-empty :image="noDataImg" description="No workout for this day" />
+    <van-empty :image="noDataImg" :description="t('workout.emptyState')" />
   </div>
 </template>
 
 <script setup lang="ts">
 import noDataImg from '@/assets/images/no-data.svg';
+
+const { t } = useI18n();
 </script>
 
 <style scoped lang="scss">

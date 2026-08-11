@@ -21,7 +21,7 @@ No test suite yet — there is no automated correctness gate. Verify changes by 
 
 ## Architecture
 
-**Stack:** Nuxt 4 + TypeScript + Pinia (`@pinia/nuxt`) + Vant 4 (`@vant/nuxt`) + VueUse (`@vueuse/nuxt`) + SCSS.
+**Stack:** Nuxt 4 + TypeScript + Pinia (`@pinia/nuxt`) + Vant 4 (`@vant/nuxt`) + VueUse (`@vueuse/nuxt`) + `@nuxtjs/i18n` + SCSS.
 
 **No backend.** Everything lives in the browser. All persistence is `localStorage` via VueUse's `useStorage`, wrapped inside Pinia stores.
 
@@ -37,10 +37,12 @@ No test suite yet — there is no automated correctness gate. Verify changes by 
 types/*.ts                 ← shared interfaces: MuscleGroup, Exercise, Workout, WorkoutExercise, SetEntry, EquipmentType
                               all ids are string (crypto.randomUUID() at creation time)
 
-app/data/muscle-groups.ts  ← static seed data: 6 muscle groups, ~35 exercises (id, name, muscleGroupId, equipment)
-app/utils/exercises.ts     ← lookups over the static catalog: getExerciseById, getMuscleGroupById,
-                              getExercisesByMuscleGroup, equipmentLabels
-app/utils/date.ts          ← formatDate/parseDate ('YYYY-MM-DD' string <-> Date), isToday
+app/data/muscle-groups.ts  ← static seed data: 6 muscle groups, ~35 exercises (id, name, muscleGroupId, equipment).
+                              `name` here is an English dev fallback only — never rendered directly, see i18n below.
+app/utils/exercises.ts     ← lookups over the static catalog: getExerciseById, getMuscleGroupById, getExercisesByMuscleGroup
+app/utils/date.ts          ← formatDate/parseDate ('YYYY-MM-DD' string <-> Date), isToday, formatDateLabel/formatWeekdayLabel (locale-aware, take a locale string)
+app/utils/format.ts        ← isBodyweight(weight) — the "kg"/"BW" text itself comes from translations, not from this util
+app/utils/pluralize.ts     ← pluralize(count, {one, few, many}) — Russian has 3 plural forms, not 2; see i18n below
 
 app/stores/workout.ts      ← THE store. workouts: Workout[] persisted via useStorage('lift-tracker-workouts').
                               One Workout per date (getOrCreateWorkoutByDate enforces this). CRUD: addExercise,
@@ -69,11 +71,23 @@ app/layouts/default.vue           ← van-config-provider(dark) + TheHeader + <s
 
   app/pages/history.vue ("/history") ← all workouts, sorted newest-first
     HistoryWorkoutListItem (per workout) ← tap sets ui.selectedDate + navigates to "/"
-
-  app/plugins/vant-locale.ts         ← Locale.use('en-US', ...) — without this Vant defaults to zh-CN
 ```
 
+`app/app.vue` also syncs Vant's own component locale (`en-US`/`ru-RU`) to the active app language via a `watch(locale, ...)` — this lives in `app.vue`'s `<script setup>`, not a plugin (see i18n section for why).
+
 Global popups (`WorkoutExercisePicker`, `WorkoutAddSetSheet`, `HistoryExerciseHistoryModal`) are mounted once in the layout, not per-page, and are driven entirely by `ui` store state — components anywhere just flip `uiStore.exercisePicker.show`, `uiStore.addSetSheet = {...}`, or `uiStore.historyExerciseId` to open them.
+
+## Internationalization (i18n)
+
+English + Russian via `@nuxtjs/i18n`. This is a permanent architecture decision, not a stopgap — see `docs/00-vision.md` for the "why translations live on the frontend forever" reasoning (short version: offline-first app, no backend to serve them from, and even the future cloud-sync backend won't own UI copy).
+
+- `i18n/locales/en.json`, `i18n/locales/ru.json` — all translatable strings, namespaced by feature (`workout.*`, `addSetSheet.*`, `exercisePicker.*`, `history.*`, `exerciseHistory.*`, `restTimer.*`, `units.*`, `calendar.*`) plus `catalog.muscleGroups.<id>` / `catalog.exercises.<id>` for the exercise catalog, keyed by the same ids used in `app/data/muscle-groups.ts`.
+- `strategy: 'no_prefix'` in `nuxt.config.ts` — no `/ru/...` URL prefixes, locale is cookie-only (`lift-tracker-locale`). Fine given `ssr: false` and no SEO need.
+- Language switcher: `left-text` on the nav-bar in `TheHeader.vue`, toggles `setLocale()`.
+- **Pluralization is hand-rolled, not vue-i18n's built-in plural syntax.** Russian has 3 plural forms (1 / 2-4 / 5+), not the 2 vue-i18n's default English-style plural rule assumes. Pattern: locale files have `xWordOne`/`xWordFew`/`xWordMany` string keys, `app/utils/pluralize.ts#pluralize(count, {one, few, many})` picks the right one, then interpolate into `units.countWord` (`"{count} {word}"`). See `app/pages/index.vue`'s `summaryText` for the canonical example.
+- **Don't use `tm()` for plain string arrays** — in this Nuxt/vue-i18n setup `tm()` returns compiled message AST nodes, not evaluated strings (you'd need `rt()` to render them). That's why plural forms are separate string keys resolved via plain `t()`, not a `tm()`-fetched array — simpler and avoids that footgun entirely.
+- **`useI18n()` cannot be called inside a `defineNuxtPlugin()` callback in this setup** — it threw `"Must be called at the top of a setup function"` even with `dependsOn: ['i18n:plugin']`. Any global i18n-dependent logic (like the Vant locale sync) belongs in `app/app.vue`'s `<script setup>` instead, which has a guaranteed valid Vue composition context.
+- Catalog display names are never read from `app/data/muscle-groups.ts#name` — always resolve via `t(\`catalog.exercises.${id}\`)` / `t(\`catalog.muscleGroups.${id}\`)`. The `name` field there is an English fallback for dev/debug convenience only.
 
 ## MVP scope
 

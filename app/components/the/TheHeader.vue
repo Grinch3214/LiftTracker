@@ -2,7 +2,9 @@
   <header class="header">
     <van-nav-bar
       :title="title"
+      :left-text="locale.toUpperCase()"
       :right-text="isWorkoutPage ? dateLabel : ''"
+      @click-left="toggleLocale"
       @click-right="isWorkoutPage && (showCalendar = true)"
     />
 
@@ -28,6 +30,7 @@ import { formatDate, isToday } from '@/utils/date';
 const route = useRoute();
 const uiStore = useUiStore();
 const workoutStore = useWorkoutStore();
+const { t, locale, setLocale } = useI18n();
 
 const showCalendar = ref(false);
 const minDate = ref(new Date(2025, 0, 1));
@@ -35,18 +38,20 @@ const maxDate = ref(new Date(2030, 11, 31));
 
 const isWorkoutPage = computed(() => route.path === '/');
 
-const titles: Record<string, string> = {
+const titles = computed<Record<string, string>>(() => ({
   '/': 'LiftTracker',
-  '/history': 'History',
-};
+  '/history': t('nav.history'),
+}));
 
-const title = computed(() => titles[route.path] ?? 'LiftTracker');
+const title = computed(() => titles.value[route.path] ?? 'LiftTracker');
 
 const dateLabel = computed(() =>
-  isToday(formatDate(uiStore.selectedDate))
-    ? 'Today'
-    : formatDate(uiStore.selectedDate),
+  isToday(formatDate(uiStore.selectedDate)) ? t('calendar.today') : formatDate(uiStore.selectedDate),
 );
+
+function toggleLocale() {
+  setLocale(locale.value === 'en' ? 'ru' : 'en');
+}
 
 function dayFormatter(day: CalendarDayItem): CalendarDayItem {
   if (day.date && workoutStore.workoutDates.includes(formatDate(day.date))) {

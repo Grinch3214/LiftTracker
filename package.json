@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^10.6.0",
     "@pinia/nuxt": "^1.0.1",
     "@vant/nuxt": "^1.0.7",
     "@vueuse/nuxt": "^14.4.0",

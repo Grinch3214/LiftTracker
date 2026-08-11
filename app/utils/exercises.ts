@@ -1,13 +1,5 @@
-import type { Exercise, MuscleGroup, EquipmentType } from '~~/types';
+import type { Exercise, MuscleGroup } from '~~/types';
 import { muscleGroups, exercises } from '@/data/muscle-groups';
-
-export const equipmentLabels: Record<EquipmentType, string> = {
-  barbell: 'Barbell',
-  dumbbell: 'Dumbbell',
-  machine: 'Machine',
-  cable: 'Cable',
-  bodyweight: 'Bodyweight',
-};
 
 export function getExerciseById(id: string): Exercise | undefined {
   return exercises.find((exercise) => exercise.id === id);

@@ -2,9 +2,9 @@
   <div class="exercise-card">
     <div class="ex-header">
       <div class="ex-meta" @click="uiStore.openExerciseHistory(exercise.id)">
-        <span class="ex-name">{{ exercise.name }}</span>
+        <span class="ex-name">{{ t(`catalog.exercises.${exercise.id}`) }}</span>
         <van-tag v-if="exercise.equipment" plain class="eq-tag">
-          {{ equipmentLabels[exercise.equipment] }}
+          {{ t(`units.equipment.${exercise.equipment}`) }}
         </van-tag>
       </div>
       <van-icon
@@ -17,10 +17,10 @@
     </div>
 
     <div class="sets-header">
-      <span>Set</span>
-      <span>Weight</span>
-      <span>Reps</span>
-      <span>Vol</span>
+      <span>{{ t('workout.setsHeaderSet') }}</span>
+      <span>{{ t('workout.setsHeaderWeight') }}</span>
+      <span>{{ t('workout.setsHeaderReps') }}</span>
+      <span>{{ t('workout.setsHeaderVol') }}</span>
       <span />
     </div>
 
@@ -33,8 +33,8 @@
     >
       <span class="set-num">{{ i + 1 }}</span>
       <span class="set-weight">
-        {{ formatWeight(set.weight) }}
-        <span v-if="isPR(set)" class="pr-badge">PR</span>
+        {{ isBodyweight(set.weight) ? t('units.bodyweight') : `${set.weight} ${t('units.kg')}` }}
+        <span v-if="isPR(set)" class="pr-badge">{{ t('workout.prBadge') }}</span>
       </span>
       <span class="set-reps">{{ set.reps }}</span>
       <span class="set-vol">{{ set.weight * set.reps }}</span>
@@ -47,12 +47,12 @@
     </div>
 
     <div v-if="workoutExercise.sets.length === 0" class="no-sets">
-      No sets yet. Add your first set below.
+      {{ t('workout.noSets') }}
     </div>
 
     <div class="add-set-btn" @click="$emit('addSet')">
       <van-icon name="plus" size="14" />
-      <span>Add set</span>
+      <span>{{ t('workout.addSet') }}</span>
     </div>
   </div>
 </template>
@@ -61,8 +61,9 @@
 import type { Exercise, WorkoutExercise, SetEntry } from '~~/types';
 import { useWorkoutStore } from '@/stores/workout';
 import { useUiStore } from '@/stores/ui';
-import { equipmentLabels } from '@/utils/exercises';
-import { formatWeight } from '@/utils/format';
+import { isBodyweight } from '@/utils/format';
+
+const { t } = useI18n();
 
 const props = defineProps<{
   exercise: Exercise;

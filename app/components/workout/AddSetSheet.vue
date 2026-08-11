@@ -9,22 +9,24 @@
 
     <div class="sheet-header">
       <span class="sheet-title">{{
-        sheet.setId !== null ? 'Edit Set' : 'Add Set'
+        sheet.setId !== null ? t('addSetSheet.editTitle') : t('addSetSheet.addTitle')
       }}</span>
-      <span class="sheet-exercise-name">{{ sheet.exerciseName }}</span>
+      <span class="sheet-exercise-name">{{ exerciseName }}</span>
     </div>
 
     <div v-if="prevSession" class="prev-info">
       <van-icon name="clock-o" size="13" color="#888" />
-      <span
-        >Last session: {{ formatWeight(prevSession.weight) }} ×
-        {{ prevSession.reps }} reps</span
-      >
+      <span>{{
+        t('addSetSheet.lastSession', {
+          weight: isBodyweight(prevSession.weight) ? t('units.bodyweight') : `${prevSession.weight} ${t('units.kg')}`,
+          reps: prevSession.reps,
+        })
+      }}</span>
     </div>
 
     <div class="inputs-row">
       <div class="input-block">
-        <label>Weight (kg)</label>
+        <label>{{ t('addSetSheet.weightLabel') }}</label>
         <van-field
           v-model="weightStr"
           type="number"
@@ -35,7 +37,7 @@
       </div>
       <div class="input-divider" />
       <div class="input-block">
-        <label>Reps</label>
+        <label>{{ t('addSetSheet.repsLabel') }}</label>
         <van-field
           v-model="repsStr"
           type="digit"
@@ -48,7 +50,7 @@
 
     <div class="sheet-actions">
       <van-button plain size="large" class="btn-cancel" @click="cancel"
-        >Cancel</van-button
+        >{{ t('addSetSheet.cancel') }}</van-button
       >
       <van-button
         type="primary"
@@ -56,7 +58,7 @@
         class="btn-confirm"
         @click="confirm"
       >
-        {{ sheet.setId !== null ? 'Save' : 'Add Set' }}
+        {{ sheet.setId !== null ? t('addSetSheet.save') : t('addSetSheet.addTitle') }}
       </van-button>
     </div>
   </van-popup>
@@ -65,12 +67,15 @@
 <script setup lang="ts">
 import { useUiStore } from '@/stores/ui';
 import { useWorkoutStore } from '@/stores/workout';
-import { formatWeight } from '@/utils/format';
+import { isBodyweight } from '@/utils/format';
 
 const uiStore = useUiStore();
 const workoutStore = useWorkoutStore();
+const { t } = useI18n();
 
 const sheet = computed(() => uiStore.addSetSheet);
+
+const exerciseName = computed(() => (sheet.value.exerciseId ? t(`catalog.exercises.${sheet.value.exerciseId}`) : ''));
 
 const weightStr = ref('');
 const repsStr = ref('');

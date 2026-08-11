@@ -1,0 +1,116 @@
+{
+  "nav": {
+    "workout": "Тренировка",
+    "history": "История"
+  },
+  "workout": {
+    "emptyState": "На этот день тренировок нет",
+    "summary": "{exercises} · {sets} · {volume} кг всего",
+    "noSets": "Пока нет подходов. Добавьте первый ниже.",
+    "addSet": "Добавить подход",
+    "removeExerciseTitle": "Удалить упражнение?",
+    "removeExerciseMessage": "Все подходы будут удалены.",
+    "remove": "Удалить",
+    "prBadge": "PR",
+    "setsHeaderSet": "№",
+    "setsHeaderWeight": "Вес",
+    "setsHeaderReps": "Повторы",
+    "setsHeaderVol": "Объём"
+  },
+  "addSetSheet": {
+    "editTitle": "Редактировать подход",
+    "addTitle": "Добавить подход",
+    "weightLabel": "Вес (кг)",
+    "repsLabel": "Повторы",
+    "lastSession": "Последний раз: {weight} × {reps} повторов",
+    "cancel": "Отмена",
+    "save": "Сохранить"
+  },
+  "exercisePicker": {
+    "selectTitle": "Выберите упражнение",
+    "back": "← Назад",
+    "alreadyAdded": "{name} уже добавлено в тренировку",
+    "added": "{name} добавлено"
+  },
+  "history": {
+    "empty": "Тренировок пока нет",
+    "kg": "{weight} кг"
+  },
+  "exerciseHistory": {
+    "title": "История",
+    "empty": "История появится здесь после первой тренировки с этим упражнением.",
+    "best": "Лучший: {value}",
+    "noBest": "—",
+    "kgTotal": "{volume} кг всего"
+  },
+  "restTimer": {
+    "label": "Отдых"
+  },
+  "units": {
+    "kg": "кг",
+    "bodyweight": "СВ",
+    "countWord": "{count} {word}",
+    "exerciseWordOne": "упражнение",
+    "exerciseWordFew": "упражнения",
+    "exerciseWordMany": "упражнений",
+    "setWordOne": "подход",
+    "setWordFew": "подхода",
+    "setWordMany": "подходов",
+    "equipment": {
+      "barbell": "Штанга",
+      "dumbbell": "Гантели",
+      "machine": "Тренажёр",
+      "cable": "Блок",
+      "bodyweight": "Собственный вес"
+    }
+  },
+  "calendar": {
+    "today": "Сегодня"
+  },
+  "catalog": {
+    "muscleGroups": {
+      "chest": "Грудь",
+      "back": "Спина",
+      "shoulders": "Плечи",
+      "arms": "Руки",
+      "legs": "Ноги",
+      "core": "Пресс"
+    },
+    "exercises": {
+      "bench-press": "Жим лёжа",
+      "incline-bench-press": "Жим лёжа на наклонной скамье",
+      "dumbbell-flyes": "Разведение гантелей лёжа",
+      "dumbbell-press": "Жим гантелей лёжа",
+      "cable-crossover": "Сведение рук в кроссовере",
+      "push-up": "Отжимания",
+      "deadlift": "Становая тяга",
+      "barbell-row": "Тяга штанги в наклоне",
+      "pull-up": "Подтягивания",
+      "lat-pulldown": "Тяга верхнего блока",
+      "seated-cable-row": "Тяга горизонтального блока",
+      "dumbbell-row": "Тяга гантели в наклоне",
+      "overhead-press": "Жим штанги стоя",
+      "dumbbell-shoulder-press": "Жим гантелей сидя",
+      "lateral-raise": "Разведение гантелей в стороны",
+      "front-raise": "Подъём гантелей перед собой",
+      "face-pull": "Тяга к лицу",
+      "barbell-curl": "Подъём штанги на бицепс",
+      "hammer-curl": "Молотки",
+      "dumbbell-curl": "Подъём гантелей на бицепс",
+      "tricep-pushdown": "Разгибание рук на блоке",
+      "skull-crusher": "Французский жим",
+      "dips": "Отжимания на брусьях",
+      "squat": "Присед",
+      "leg-press": "Жим ногами",
+      "romanian-deadlift": "Румынская тяга",
+      "leg-curl": "Сгибание ног",
+      "leg-extension": "Разгибание ног",
+      "calf-raise": "Подъём на носки",
+      "lunges": "Выпады",
+      "plank": "Планка",
+      "crunch": "Скручивания",
+      "leg-raise": "Подъём ног",
+      "cable-crunch": "Скручивания на блоке"
+    }
+  }
+}

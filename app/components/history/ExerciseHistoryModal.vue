@@ -9,12 +9,12 @@
     <div class="sheet-handle" />
 
     <div class="sheet-header">
-      <span class="sheet-title">History</span>
-      <span class="sheet-exercise-name">{{ exercise?.name }}</span>
+      <span class="sheet-title">{{ t('exerciseHistory.title') }}</span>
+      <span class="sheet-exercise-name">{{ exerciseName }}</span>
     </div>
 
     <div v-if="history.length === 0" class="empty">
-      History will appear here after your first workout with this exercise.
+      {{ t('exerciseHistory.empty') }}
     </div>
 
     <div v-else class="history-list">
@@ -23,23 +23,16 @@
         :key="entry.workoutId"
         class="history-entry"
       >
-        <div class="entry-date">{{ formatDateLabel(entry.date) }}</div>
+        <div class="entry-date">{{ formatDateLabel(entry.date, locale) }}</div>
         <div class="entry-sets">
           <span v-for="set in entry.sets" :key="set.id" class="entry-set">
-            {{ formatWeight(set.weight) }} × {{ set.reps }}
+            {{ weightLabel(set.weight) }} × {{ set.reps }}
           </span>
         </div>
         <div class="entry-stats">
-          <span
-            >Best:
-            {{
-              entry.bestSet
-                ? `${formatWeight(entry.bestSet.weight)} × ${entry.bestSet.reps}`
-                : '—'
-            }}</span
-          >
+          <span>{{ t('exerciseHistory.best', { value: entry.bestSet ? `${weightLabel(entry.bestSet.weight)} × ${entry.bestSet.reps}` : t('exerciseHistory.noBest') }) }}</span>
           <span class="dot">·</span>
-          <span>{{ entry.totalVolume.toLocaleString() }} kg total</span>
+          <span>{{ t('exerciseHistory.kgTotal', { volume: entry.totalVolume.toLocaleString() }) }}</span>
         </div>
       </div>
     </div>
@@ -50,11 +43,12 @@
 import { useUiStore } from '@/stores/ui';
 import { useWorkoutStore } from '@/stores/workout';
 import { getExerciseById } from '@/utils/exercises';
-import { formatWeight } from '@/utils/format';
+import { isBodyweight } from '@/utils/format';
 import { formatDateLabel } from '@/utils/date';
 
 const uiStore = useUiStore();
 const workoutStore = useWorkoutStore();
+const { t, locale } = useI18n();
 
 const show = computed({
   get: () => uiStore.historyExerciseId !== null,
@@ -63,10 +57,10 @@ const show = computed({
   },
 });
 
-const exercise = computed(() =>
-  uiStore.historyExerciseId
-    ? getExerciseById(uiStore.historyExerciseId)
-    : undefined,
+const exerciseName = computed(() =>
+  uiStore.historyExerciseId && getExerciseById(uiStore.historyExerciseId)
+    ? t(`catalog.exercises.${uiStore.historyExerciseId}`)
+    : '',
 );
 
 const history = computed(() => {
@@ -75,6 +69,10 @@ const history = computed(() => {
     ...workoutStore.getExerciseHistory(uiStore.historyExerciseId),
   ].reverse();
 });
+
+function weightLabel(weight: number): string {
+  return isBodyweight(weight) ? t('units.bodyweight') : `${weight} ${t('units.kg')}`;
+}
 </script>
 
 <style scoped lang="scss">

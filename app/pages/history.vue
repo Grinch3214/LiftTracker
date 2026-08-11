@@ -2,7 +2,7 @@
   <div class="history-page">
     <van-empty
       v-if="sortedWorkouts.length === 0"
-      description="No workouts logged yet"
+      :description="t('history.empty')"
     />
 
     <HistoryWorkoutListItem
@@ -17,6 +17,7 @@
 import { useWorkoutStore } from '@/stores/workout';
 
 const workoutStore = useWorkoutStore();
+const { t } = useI18n();
 
 const sortedWorkouts = computed(() =>
   [...workoutStore.workouts].sort((a, b) => b.date.localeCompare(a.date)),

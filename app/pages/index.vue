@@ -16,13 +16,7 @@
         @delete-exercise="removeExercise(we.id)"
       />
 
-      <div class="workout-summary">
-        <span>{{ exercises.length }} exercises</span>
-        <span class="dot">·</span>
-        <span>{{ totalSets }} sets</span>
-        <span class="dot">·</span>
-        <span>{{ totalVolume.toLocaleString() }} kg total</span>
-      </div>
+      <div class="workout-summary">{{ summaryText }}</div>
     </template>
   </div>
 </template>
@@ -34,9 +28,11 @@ import { useWorkoutStore } from '@/stores/workout';
 import { useUiStore } from '@/stores/ui';
 import { getExerciseById } from '@/utils/exercises';
 import { formatDate } from '@/utils/date';
+import { pluralize } from '@/utils/pluralize';
 
 const workoutStore = useWorkoutStore();
 const uiStore = useUiStore();
+const { t } = useI18n();
 
 const currentDate = computed(() => formatDate(uiStore.selectedDate));
 
@@ -55,12 +51,38 @@ const totalVolume = computed(() =>
   ),
 );
 
+const exerciseWord = computed(() =>
+  pluralize(exercises.value.length, {
+    one: t('units.exerciseWordOne'),
+    few: t('units.exerciseWordFew'),
+    many: t('units.exerciseWordMany'),
+  }),
+);
+
+const setWord = computed(() =>
+  pluralize(totalSets.value, {
+    one: t('units.setWordOne'),
+    few: t('units.setWordFew'),
+    many: t('units.setWordMany'),
+  }),
+);
+
+const summaryText = computed(() =>
+  t('workout.summary', {
+    exercises: t('units.countWord', {
+      count: exercises.value.length,
+      word: exerciseWord.value,
+    }),
+    sets: t('units.countWord', { count: totalSets.value, word: setWord.value }),
+    volume: totalVolume.value.toLocaleString(),
+  }),
+);
+
 function getExercise(exerciseId: string) {
   return getExerciseById(exerciseId)!;
 }
 
 function openAddSet(we: WorkoutExercise) {
-  const exercise = getExerciseById(we.exerciseId);
   const lastSet = we.sets.length > 0 ? we.sets[we.sets.length - 1] : null;
   uiStore.addSetSheet = {
     show: true,
@@ -70,12 +92,10 @@ function openAddSet(we: WorkoutExercise) {
     setId: null,
     defaultWeight: lastSet?.weight ?? 0,
     defaultReps: lastSet?.reps ?? 0,
-    exerciseName: exercise?.name ?? '',
   };
 }
 
 function openEditSet(we: WorkoutExercise, set: SetEntry) {
-  const exercise = getExerciseById(we.exerciseId);
   uiStore.addSetSheet = {
     show: true,
     date: currentDate.value,
@@ -84,7 +104,6 @@ function openEditSet(we: WorkoutExercise, set: SetEntry) {
     setId: set.id,
     defaultWeight: set.weight,
     defaultReps: set.reps,
-    exerciseName: exercise?.name ?? '',
   };
 }
 
@@ -94,9 +113,9 @@ function removeSet(workoutExerciseId: string, setId: string) {
 
 async function removeExercise(workoutExerciseId: string) {
   await showConfirmDialog({
-    title: 'Remove exercise?',
-    message: 'All sets will be deleted.',
-    confirmButtonText: 'Remove',
+    title: t('workout.removeExerciseTitle'),
+    message: t('workout.removeExerciseMessage'),
+    confirmButtonText: t('workout.remove'),
     confirmButtonColor: '#ee0a24',
   });
   workoutStore.removeExercise(currentDate.value, workoutExerciseId);
@@ -111,16 +130,9 @@ async function removeExercise(workoutExerciseId: string) {
 }
 
 .workout-summary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  text-align: center;
   padding: 16px;
   font-size: 13px;
   color: var(--van-text-color-2);
-}
-
-.dot {
-  opacity: 0.4;
 }
 </style>

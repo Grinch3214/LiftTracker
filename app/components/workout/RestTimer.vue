@@ -6,7 +6,7 @@
       @click="uiStore.stopRestTimer()"
     >
       <van-icon name="clock-o" size="15" />
-      <span class="timer-label">Rest</span>
+      <span class="timer-label">{{ t('restTimer.label') }}</span>
       <span class="timer-value">{{ timerDisplay }}</span>
       <div class="timer-bar">
         <div class="timer-bar-fill" :style="{ width: timerProgress + '%' }" />
@@ -20,6 +20,7 @@
 import { useUiStore } from '@/stores/ui';
 
 const uiStore = useUiStore();
+const { t } = useI18n();
 
 const timerDisplay = computed(() => {
   const s = uiStore.restTimer.remaining;

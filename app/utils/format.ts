@@ -1,3 +1,3 @@
-export function formatWeight(weight: number): string {
-  return weight > 0 ? `${weight} kg` : 'BW';
+export function isBodyweight(weight: number): boolean {
+  return weight <= 0;
 }

@@ -9,7 +9,6 @@ export interface AddSetSheetState {
   setId: string | null;
   defaultWeight: number;
   defaultReps: number;
-  exerciseName: string;
 }
 
 export const useUiStore = defineStore('ui', () => {
@@ -23,7 +22,6 @@ export const useUiStore = defineStore('ui', () => {
     setId: null,
     defaultWeight: 0,
     defaultReps: 0,
-    exerciseName: '',
   });
 
   const exercisePicker = ref({ show: false });
